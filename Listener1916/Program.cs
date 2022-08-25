@@ -15,7 +15,7 @@ namespace Listener1916
             // ---------------------------------------------------------------------------------------------------------------
             // -- Across
 
-            //var poss_A = FindDivisors('A', 9, 13);
+            var poss_A = new AnswerList('A');               //var poss_A = FindDivisors('A', 9, 13);
             var poss_B = FindDivisors('B', 2, 8);
             var poss_C = FindDivisors('C', 6, 14);
             var poss_D = FindDivisors('D', 5, 3);
@@ -31,15 +31,15 @@ namespace Listener1916
             var poss_Q = FindDivisors('Q', 5, 6);
             var poss_R = FindDivisors('R', 6, 15);
             var poss_S = FindDivisors('S', 2, 8);
-            //var poss_T = FindDivisors('T', 9, 26);
+            var poss_T = new AnswerList('T');               //var poss_T = FindDivisors('T', 9, 26);
 
             // -- Down
 
-            //var poss_a = FindDivisors('a', 9, 11);
+            var poss_a = new AnswerList('a');               //var poss_a = FindDivisors('a', 9, 11);
             var poss_b = FindDivisors('b', 2, 10);
             var poss_c = FindDivisors('c', 3, 9);
             var poss_d = FindDivisors('d', 4, 20);
-            //var poss_e = FindDivisors('e', 9, 7);
+            var poss_e = new AnswerList('e');               //var poss_e = FindDivisors('e', 9, 7);
             var poss_f = FindDivisors('f', 3, 18);
             var poss_g = FindDivisors('g', 3, 9);
             var poss_h = FindDivisors('h', 4, 28);
@@ -55,16 +55,12 @@ namespace Listener1916
             var poss_u = FindDivisors('u', 3, 24);
             var poss_v = FindDivisors('v', 2, 3);
 
-            // -- This takes FOREVER to calc - so ...
+            // -- These take FOREVER to calc - so ...
 
-            var poss_e = new AnswerList('e');
-            poss_e.Add(new Factor(594823321, 7));
-
-            var poss_A = new AnswerList('A');
             poss_A.Add(new Factor(244140625, 13));
-
-            var poss_a = new AnswerList('a');
             poss_a.Add(new Factor(282475249, 11));
+            poss_e.Add(new Factor(594823321, 7));
+            poss_T.Add(new Factor(914609961, 26));
 
             // ---------------------------------------------------------------------------------------------------------------
             // -- Nothing can start with a zero - so exclude these out of hand
@@ -111,9 +107,10 @@ namespace Listener1916
             // ---------------------------------------------------------------------------------------------------------------
             // -- Here we go ...
 
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 3; i++)
             {
-                OnlyAllowCrossDigits(poss_A, 2, poss_b, 0); // - A
+                OnlyAllowCrossDigits(poss_A, 0, poss_a, 0); // - A
+                OnlyAllowCrossDigits(poss_A, 2, poss_b, 0);
                 OnlyAllowCrossDigits(poss_A, 4, poss_c, 0);
                 OnlyAllowCrossDigits(poss_A, 6, poss_d, 0);
                 OnlyAllowCrossDigits(poss_A, 8, poss_e, 0);
@@ -128,7 +125,8 @@ namespace Listener1916
                 OnlyAllowCrossDigits(poss_C, 4, poss_d, 1);
                 OnlyAllowCrossDigits(poss_C, 5, poss_j, 0);
 
-                OnlyAllowCrossDigits(poss_D, 1, poss_f, 1); // -- D
+                OnlyAllowCrossDigits(poss_D, 0, poss_a, 2); // -- D
+                OnlyAllowCrossDigits(poss_D, 1, poss_f, 1);
                 OnlyAllowCrossDigits(poss_D, 2, poss_k, 0);
                 OnlyAllowCrossDigits(poss_D, 3, poss_g, 1);
                 OnlyAllowCrossDigits(poss_D, 4, poss_c, 2);
@@ -187,6 +185,11 @@ namespace Listener1916
                 OnlyAllowCrossDigits(poss_S, 0, poss_t, 2); // -- S
                 OnlyAllowCrossDigits(poss_S, 1, poss_e, 7);
 
+                OnlyAllowCrossDigits(poss_T, 0, poss_a, 8); // -- T
+                OnlyAllowCrossDigits(poss_T, 2, poss_r, 3);
+                OnlyAllowCrossDigits(poss_T, 4, poss_u, 2);
+                OnlyAllowCrossDigits(poss_T, 6, poss_v, 1);
+                OnlyAllowCrossDigits(poss_T, 8, poss_e, 8);
 
             }
 
@@ -209,7 +212,7 @@ namespace Listener1916
             Console.WriteLine(poss_Q);
             Console.WriteLine(poss_R);
             Console.WriteLine(poss_S);
-            //Console.WriteLine(poss_T); ;
+            Console.WriteLine(poss_T);
             Console.WriteLine();
 
             Console.WriteLine(poss_a);
@@ -222,19 +225,18 @@ namespace Listener1916
             Console.WriteLine(poss_h);
             Console.WriteLine(poss_j);
             Console.WriteLine(poss_k);
-
             Console.WriteLine(poss_m);
             Console.WriteLine(poss_n);
             Console.WriteLine(poss_p);
             Console.WriteLine(poss_q);
             Console.WriteLine(poss_r);
-
             Console.WriteLine(poss_s);
             Console.WriteLine(poss_t);
             Console.WriteLine(poss_u);
             Console.WriteLine(poss_v);
-            Console.WriteLine("-------------------");
 
+
+            Console.WriteLine("-------------------");
         }
 #if false
 
@@ -309,7 +311,7 @@ namespace Listener1916
                             }    
                         }
 
-                                    // ---------------------------------------------------------------------------------------------------------------
+            // ---------------------------------------------------------------------------------------------------------------
             // -- have a go at a(11)
             Console.WriteLine("-- a(11)\n");
 
@@ -348,14 +350,44 @@ namespace Listener1916
                                 }
                     }
         
+            Console.WriteLine("------ T");
+            int from_a = poss_a.GetDigitsAtPos(8)[0];
+            int from_r = poss_r.GetDigitsAtPos(3)[0];
+            int from_u = poss_u.GetDigitsAtPos(2)[0];
+            int from_v = poss_v.GetDigitsAtPos(1)[0];
+            int from_e = poss_e.GetDigitsAtPos(8)[0];
+
+            long root
+                = from_a * 100000000
+                + from_r * 1000000
+                + from_u * 10000
+                + from_v * 100
+                + from_e;
+
+            for (int i = 0; i < 10; i++)
+                for (int j = 0; j < 10; j++)
+                    for (int k = 0; k < 10; k++)
+                        for (int l = 0; l < 10; l++)
+                        {
+                            long theNum = root
+                                + l * 10
+                                + k * 1000
+                                + j * 100000
+                                + i * 10000000;
+
+                            var f = new Factor(theNum);
+                            if (f.FactorCount == 26)
+                                Console.WriteLine($"{root} {theNum}   =>  {f}");
+                        }
+
 
 
 
 #endif
 
-            // ---------------------------------------------------------------------------------------------------------------
+        // ---------------------------------------------------------------------------------------------------------------
 
-            static void PopulateDivisors(long maxValue)
+        static void PopulateDivisors(long maxValue)
         {
             for (long prod = 10; prod < maxValue; prod++)
                 Divisors.Add(new Factor(prod));
